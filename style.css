@@ -385,7 +385,7 @@ span{
   }
   
   .about-card {
-    padding: 30px 20px;
+    padding: 2px 2px;
   }
 }
 
@@ -465,7 +465,7 @@ span{
   }
   
   .skill-icon {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     margin-left: 15px;
   }
   
@@ -588,13 +588,13 @@ span{
 .cert-item {
   background: linear-gradient(145deg, rgb(0, 0, 0) 0%, rgba(255, 255, 255, 0.01) 100%);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   padding: 35px 30px;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.664);
   display: flex;
 }
 
@@ -858,7 +858,7 @@ span{
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+
 }
 
 .info-container {
@@ -1300,9 +1300,9 @@ footer {
   .about-img img {
     width: 90vw;
   }
-  
+
   .skill {
-    width: 120px;
+    width: 130px;
   }
   
   .see-all {
