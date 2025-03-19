@@ -93,7 +93,7 @@ function nextCertificate() {
 
 // Initialize EmailJS
 (function() {
-    emailjs.init("xPL2Y4_AdHjIvdEbN"); // Replace with your EmailJS public key
+    emailjs.init("xPL2Y4_AdHjIvdEbN"); // Keep your public key
 })();
 
 function sendEmail() {
@@ -106,22 +106,25 @@ function sendEmail() {
         return;
     }
 
-    // Email template parameters
     const templateParams = {
-        from_name: name,
-        from_email: email,
+        name: name,
+        email: email,
         message: message,
-        to_name: 'Madushi Tharaka',
-        to_email: 'madushitharaka1913@gmail.com' // Replace with your email
+        subject: `Portfolio Contact from ${name}`
     };
 
-    // Send email using EmailJS
-    emailjs.send('service_qokrx9b', 'template_09dd8jt', templateParams) // Replace with your service ID and template ID
-        .then(function(response) {
-            alert('Message sent successfully!');
+    emailjs.send('service_qokrx9b', 'template_o2g7srk', templateParams)
+        .then(function() {
+            alert(`Thank you ${name}! I will get back to you soon.`);
+            // Clear form fields
+            document.getElementById('user_name').value = '';
+            document.getElementById('user_email').value = '';
+            document.getElementById('message').value = '';
+            // Alternative method to clear form
             document.getElementById('contact-form').reset();
         }, function(error) {
-            alert('Failed to send message. Please try again.');
+            console.error('Failed to send message:', error);
+            alert('Sorry, there was an error. Please try again or email me directly at madushitharaka1913@gmail.com');
         });
 }
 
