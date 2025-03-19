@@ -91,3 +91,37 @@ function nextCertificate() {
     document.getElementById("fullCertificate").src = certificates[currentIndex];
 }
 
+// Initialize EmailJS
+(function() {
+    emailjs.init("xPL2Y4_AdHjIvdEbN"); // Replace with your EmailJS public key
+})();
+
+function sendEmail() {
+    const name = document.getElementById('user_name').value;
+    const email = document.getElementById('user_email').value;
+    const message = document.getElementById('message').value;
+
+    if (!name || !email || !message) {
+        alert('Please fill all the fields');
+        return;
+    }
+
+    // Email template parameters
+    const templateParams = {
+        from_name: name,
+        from_email: email,
+        message: message,
+        to_name: 'Madushi Tharaka',
+        to_email: 'madushitharaka1913@gmail.com' // Replace with your email
+    };
+
+    // Send email using EmailJS
+    emailjs.send('service_qokrx9b', 'template_09dd8jt', templateParams) // Replace with your service ID and template ID
+        .then(function(response) {
+            alert('Message sent successfully!');
+            document.getElementById('contact-form').reset();
+        }, function(error) {
+            alert('Failed to send message. Please try again.');
+        });
+}
+
