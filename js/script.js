@@ -104,11 +104,15 @@ function sendEmail() {
     const name = document.getElementById('user_name').value;
     const email = document.getElementById('user_email').value;
     const message = document.getElementById('message').value;
+    const submitBtn = document.getElementById('submit-btn');
 
     if (!name || !email || !message) {
         alert('Please fill all the fields');
         return;
     }
+
+    // Disable button to prevent multiple submissions
+
 
     const templateParams = {
         name: name,
@@ -120,46 +124,38 @@ function sendEmail() {
     emailjs.send('service_qokrx9b', 'template_o2g7srk', templateParams)
         .then(function() {
             alert(`Thank you ${name}! I will get back to you soon.`);
-            // Clear form fields
-            document.getElementById('user_name').value = '';
-            document.getElementById('user_email').value = '';
-            document.getElementById('message').value = '';
-            // Alternative method to clear form
+            
+            // More thorough form clearing
+            const nameInput = document.getElementById('user_name');
+            const emailInput = document.getElementById('user_email');
+            const messageInput = document.getElementById('message');
+            
+            // Clear individual fields explicitly
+            nameInput.value = '';
+            emailInput.value = '';
+            messageInput.value = '';
+            
+            // Alternative method to reset the form
             document.getElementById('contact-form').reset();
+      
+            
+            // Reset any validation styling
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                input.style.borderColor = '';
+            });
+            
+            // Restore button to original state
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Send message';
         }, function(error) {
             console.error('Failed to send message:', error);
             alert('Sorry, there was an error. Please try again or email me directly at madushitharaka1913@gmail.com');
+            // Re-enable the button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Send message';
         });
 }
-
-/* Add click event listeners to navigation links */
-document.addEventListener('DOMContentLoaded', function() {
-    // Make navigation links smooth scroll to sections
-    navlinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            let targetId = this.getAttribute('href');
-            let targetSection = document.querySelector(targetId);
-            window.scrollTo({
-                top: targetSection.offsetTop - 100,
-                behavior: 'smooth'
-            });
-            
-            // Close mobile menu when a link is clicked
-            navbar.classList.remove('active');
-            menuIcon.classList.remove('bx-x');
-        });
-    });
-
-    // Add form validation before submission
-    const contactForm = document.getElementById('contact-form');
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    
-    submitButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        validateAndSubmit();
-    });
-});
 
 // Improved form validation and submission
 function validateAndSubmit() {
@@ -176,17 +172,14 @@ function validateAndSubmit() {
     let isValid = true;
     
     if (!name.value.trim()) {
-        name.style.borderColor = 'red';
         isValid = false;
     }
     
     if (!email.value.trim() || !isValidEmail(email.value)) {
-        email.style.borderColor = 'red';
         isValid = false;
     }
     
     if (!message.value.trim()) {
-        message.style.borderColor = 'red';
         isValid = false;
     }
     
@@ -315,10 +308,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form validation setup
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const submitButton = document.getElementById('submit-btn');
         if (submitButton) {
+            // Remove any existing listeners (not directly possible, but we'll ensure only one is attached)
+            submitButton.onclick = null;
+            
+            // Add a single event handler for the submit button
             submitButton.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation(); // Prevent event bubbling
                 validateAndSubmit();
             });
         }
