@@ -260,3 +260,122 @@ window.addEventListener('scroll', function() {
     }, 100);
 });
 
+// Remove previous DOMContentLoaded listeners and consolidate mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get elements once
+    const menuIcon = document.querySelector('#menu-icon');
+    const navbar = document.querySelector('.navbar');
+    const navLinks = document.querySelectorAll('.navbar a');
+    
+    // Toggle menu functionality
+    if (menuIcon) {
+        menuIcon.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event bubbling
+            this.classList.toggle('bx-x');
+            navbar.classList.toggle('active');
+        });
+    }
+    
+    // Close menu when clicking on nav links
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default anchor behavior
+            
+            // Get target section and scroll to it
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Close mobile menu
+            menuIcon.classList.remove('bx-x');
+            navbar.classList.remove('active');
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        // If menu is open and click is outside menu and not on menu icon
+        if (navbar.classList.contains('active') && 
+            !navbar.contains(e.target) && 
+            e.target !== menuIcon) {
+            menuIcon.classList.remove('bx-x');
+            navbar.classList.remove('active');
+        }
+    });
+    
+    // Initialize active state
+    updateActiveLink();
+    
+    // Form validation setup
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        if (submitButton) {
+            submitButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                validateAndSubmit();
+            });
+        }
+    }
+});
+
+// Enhanced Project tabs functionality for underline design
+document.addEventListener('DOMContentLoaded', function() {
+    // ...existing code...
+    
+    // Project tabs functionality with elegant transitions
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const projectCategories = document.querySelectorAll('.project-category');
+    
+    if (tabButtons.length > 0) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons with smooth transition
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    // Reset any inline styles that might interfere
+                    btn.style.color = '';
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Get the category to show
+                const category = this.getAttribute('data-category');
+                
+                // First, set all categories to fade out
+                projectCategories.forEach(cat => {
+                    if (cat.classList.contains('active')) {
+                        cat.style.opacity = '0';
+                        cat.style.transform = 'translateY(20px)';
+                    }
+                });
+                
+                // After short transition, update active status and fade in
+                setTimeout(() => {
+                    projectCategories.forEach(cat => {
+                        cat.classList.remove('active');
+                        if (cat.id === category) {
+                            cat.classList.add('active');
+                            setTimeout(() => {
+                                cat.style.opacity = '1';
+                                cat.style.transform = 'translateY(0)';
+                            }, 50);
+                        }
+                    });
+                }, 300);
+            });
+        });
+    }
+    
+    // ...existing code...
+});
+
+// ...existing code...
+
