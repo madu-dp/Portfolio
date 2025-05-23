@@ -923,7 +923,7 @@ span{
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-bottom: 60px; /* Space for tags and status */
+  padding-bottom: 80px; /* Increased from 60px to create more space */
 }
 
 .project-title {
@@ -936,16 +936,18 @@ span{
   font-size: 15px;
   color: var(--text-light);
   line-height: 1.5;
-  margin-bottom: 15px;
+  margin-bottom: 25px; /* Increased from 15px to create more space above tags */
 }
 
 .project-tags {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap; /* Allow tags to wrap to multiple lines */
   gap: 8px;
   position: absolute;
-  bottom: 15px;
+  bottom: 20px; /* Increased from 15px to create more space */
   left: 20px;
+  width: calc(100% - 130px); /* Ensure tags don't overlap with status badge */
 }
 
 .tag {
@@ -953,15 +955,26 @@ span{
   padding: 4px 8px;
   border-radius: 4px;
   color: #ffffff;
+  margin-bottom: 5px; /* Add space between wrapped tag rows */
 }
 
 .tag-figma {
   background-color: #9901ff;
 }
 
+.tag-react {
+  background-color: #00c8ff;
+}
+.tag-node{
+  background-color: #8cc84b;
+}
+.tag-mongo{
+  background-color: #c79b0c;
+}
+
 .status-badge {
   position: absolute;
-  bottom: 15px;
+  bottom: 20px; /* Match the bottom position of tags for alignment */
   right: 20px;
   padding: 5px 12px;
   border-radius: 4px;
@@ -980,7 +993,17 @@ span{
   color: #fff;
 }
 
-/* Redesigned Project Tabs - Underline Style */
+/* R
+.status-in-progress {
+  background-color: var(--accent);
+  color: var(--text-light);
+}
+
+.status-completed {
+  background-color: #028a0d;
+  color: #fff;
+}
+edesigned Project Tabs - Underline Style */
 .project-tabs {
   display: flex;
   justify-content: center;
